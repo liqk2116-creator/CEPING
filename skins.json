@@ -1,0 +1,2128 @@
+{
+  "package_version": "skins_v2_persona_72_score_v2_domains",
+  "generated_at_utc": "2026-02-10T20:02:12Z",
+  "language": "zh-CN",
+  "schema": "skins.persona.v3.score_rank",
+  "desc": "皮肤库（100条）：仅输出人设名（2–6字）+命中条件。每条至少3个信号（点位阈值触发为主，可辅以轴方向）。用于免费层传播型‘皮肤’。\n\n[UPDATE] 2026-02-12: skins now use scoring+ranking (方案C). Output Top3 by match_score. Personas are unique (72). Directions use L/M/R; point conditions use score after reverse.\n\nUpdate v2_domains: personas rewritten to be unique meme-style; added domain (love/social/work/cognition/life/aesthetic) balanced 12 each; matching rules unchanged.",
+  "constraints": {
+    "persona_len": "2-6字",
+    "thresholds": {
+      "high": 4,
+      "low": 2
+    },
+    "min_signals": 3,
+    "unique_persona_required": true,
+    "top_n": 3
+  },
+  "schema_detail": {
+    "skin_entry_fields": [
+      "skin_id",
+      "persona",
+      "match"
+    ],
+    "dir_enum": [
+      "L",
+      "M",
+      "R"
+    ],
+    "match": {
+      "points": [
+        {
+          "id": "point_id",
+          "op": [
+            ">=",
+            "<="
+          ],
+          "value": "int(1..5)"
+        }
+      ],
+      "axes": [
+        {
+          "id": "axis_id(B..G)",
+          "dir": [
+            "L",
+            "M",
+            "R"
+          ]
+        }
+      ]
+    },
+    "match_policy_ref": "match_policy",
+    "skin_object_additions": {
+      "domain": {
+        "type": "string",
+        "enum": [
+          "love",
+          "social",
+          "work",
+          "cognition",
+          "life",
+          "aesthetic"
+        ],
+        "desc": "Persona domain tag for balance and analytics; does not affect matching."
+      }
+    }
+  },
+  "match_policy": {
+    "mode": "rank_top_n",
+    "n": 3,
+    "scoring": {
+      "mode": "weighted_sum",
+      "default_weights": {
+        "point": 2.0,
+        "axis": 1.0
+      },
+      "partial_credit": {
+        "point": {
+          "enabled": true,
+          "rule": {
+            ">=": "full if score>=v; half if score==v-1; else 0",
+            "<=": "full if score<=v; half if score==v+1; else 0"
+          }
+        },
+        "axis": {
+          "enabled": true,
+          "rule": "full if dir matches; half if adjacent (L<->M or M<->R); else 0"
+        }
+      },
+      "normalize": false
+    },
+    "tie_break": [
+      "match_score_desc",
+      "matched_weight_desc",
+      "matched_conditions_desc",
+      "skin_id_asc"
+    ],
+    "notes": [
+      "This replaces previous strict AND match. Each condition contributes weight to match_score.",
+      "Program should compute score for every skin and return Top3."
+    ]
+  },
+  "skins": [
+    {
+      "skin_id": "SK001",
+      "persona": "审美洁癖",
+      "match": {
+        "axes": [
+          {
+            "id": "E",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "E2",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "B1",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "D6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK002",
+      "persona": "质感偏执者",
+      "match": {
+        "axes": [
+          {
+            "id": "E",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "E6",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "B1",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "D6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK003",
+      "persona": "现实主义",
+      "match": {
+        "axes": [
+          {
+            "id": "E",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "B1",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "D6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK004",
+      "persona": "反卷专家",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "G1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK005",
+      "persona": "会议免疫体",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "G1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK006",
+      "persona": "DDL驯兽师",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "D6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK007",
+      "persona": "松弛感管理员",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK008",
+      "persona": "稳定主义",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "F5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK009",
+      "persona": "生活排障员",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK010",
+      "persona": "对齐官",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "D4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK011",
+      "persona": "风险会计师",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK012",
+      "persona": "收藏症候群",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "B3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK013",
+      "persona": "配色侦探",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK014",
+      "persona": "偏执推演家",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "B3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK015",
+      "persona": "KPI翻译器",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "D4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G1",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "B3",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK016",
+      "persona": "流程洁癖",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "G6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK017",
+      "persona": "恋爱现实派",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "H4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK018",
+      "persona": "安全感审计员",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F2",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK019",
+      "persona": "细节控",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "A6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK020",
+      "persona": "心软硬壳",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "H3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK021",
+      "persona": "风格守门员",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H2",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK022",
+      "persona": "极简信徒",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "A2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H3",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "E2",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK023",
+      "persona": "社交省电模式",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "H6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK024",
+      "persona": "亲密慢热型",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "H1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H3",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK025",
+      "persona": "断舍离教练",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "H6",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "F2",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK026",
+      "persona": "情绪防火墙",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK027",
+      "persona": "作息守门人",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "G2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK028",
+      "persona": "复古滤镜党",
+      "match": {
+        "axes": [
+          {
+            "id": "D",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "E8",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A2",
+            "op": "<=",
+            "value": 2
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK029",
+      "persona": "依恋节奏控",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "H4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK030",
+      "persona": "手作观察员",
+      "match": {
+        "axes": [
+          {
+            "id": "E",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "H6",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK031",
+      "persona": "概率洁癖",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "G1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK032",
+      "persona": "设计雷达",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "E8",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK033",
+      "persona": "吃醋免疫体",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "H1",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "H2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H3",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK034",
+      "persona": "氛围感工程师",
+      "match": {
+        "axes": [
+          {
+            "id": "D",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "H4",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "E6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK035",
+      "persona": "气氛绝缘体",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "H6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H5",
+            "op": "<=",
+            "value": 2
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK036",
+      "persona": "精打细算派",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK037",
+      "persona": "高敏雷达",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "H5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK038",
+      "persona": "复盘上瘾者",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "A7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H3",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "H1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK039",
+      "persona": "话题终结者",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H2",
+            "op": "<=",
+            "value": 2
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK040",
+      "persona": "颜值优先派",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "E6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "aesthetic"
+    },
+    {
+      "skin_id": "SK041",
+      "persona": "清单生活家",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "A7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK042",
+      "persona": "失望预警器",
+      "match": {
+        "axes": [
+          {
+            "id": "E",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "F2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK043",
+      "persona": "体面退场派",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "H6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK044",
+      "persona": "合作缓冲垫",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "E2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G1",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "D3",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK045",
+      "persona": "低配幸福学",
+      "match": {
+        "axes": [
+          {
+            "id": "D",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "A6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK046",
+      "persona": "群聊潜水王",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "H3",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "H4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK047",
+      "persona": "交付控",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "G6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D5",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK048",
+      "persona": "边界律师",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK049",
+      "persona": "懒人效率派",
+      "match": {
+        "axes": [
+          {
+            "id": "D",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "A6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK050",
+      "persona": "需求验尸官",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "B3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G5",
+            "op": "<=",
+            "value": 2
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK051",
+      "persona": "分寸拿捏师",
+      "match": {
+        "axes": [
+          {
+            "id": "D",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "E8",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK052",
+      "persona": "低配浪漫党",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "F2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H3",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK053",
+      "persona": "证据党",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "A2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H4",
+            "op": "<=",
+            "value": 2
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK054",
+      "persona": "反馈过滤器",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "R"
+          }
+        ],
+        "points": [
+          {
+            "id": "E2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK055",
+      "persona": "先验护法",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "F1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F2",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK056",
+      "persona": "工位隐身术",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "D1",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "G6",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "D6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK057",
+      "persona": "备份控",
+      "match": {
+        "axes": [
+          {
+            "id": "D",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "B3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK058",
+      "persona": "关系边界线",
+      "match": {
+        "axes": [
+          {
+            "id": "E",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "D6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E2",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK059",
+      "persona": "反直觉猎手",
+      "match": {
+        "axes": [
+          {
+            "id": "C",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "H4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A1",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK060",
+      "persona": "出门仪式感",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "E8",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G6",
+            "op": "<=",
+            "value": 2
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK061",
+      "persona": "系统思维派",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK062",
+      "persona": "夸夸节能版",
+      "match": {
+        "axes": [
+          {
+            "id": "G",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E8",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK063",
+      "persona": "冷场修复师",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "G2",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E2",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK064",
+      "persona": "互不打扰派",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "G1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    },
+    {
+      "skin_id": "SK065",
+      "persona": "变量收集癖",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "H2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F2",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK066",
+      "persona": "爱情风险官",
+      "match": {
+        "axes": [
+          {
+            "id": "D",
+            "dir": "M"
+          }
+        ],
+        "points": [
+          {
+            "id": "H5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "H3",
+            "op": "<=",
+            "value": 2
+          },
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "love"
+    },
+    {
+      "skin_id": "SK067",
+      "persona": "加班反制派",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "D3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B3",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK068",
+      "persona": "决策极简派",
+      "match": {
+        "axes": [
+          {
+            "id": "D",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "D6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK069",
+      "persona": "家务外包脑",
+      "match": {
+        "axes": [
+          {
+            "id": "B",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "F4",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "F5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "life"
+    },
+    {
+      "skin_id": "SK070",
+      "persona": "认知减噪器",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "D5",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "D3",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E7",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "cognition"
+    },
+    {
+      "skin_id": "SK071",
+      "persona": "计划通",
+      "match": {
+        "axes": [
+          {
+            "id": "F",
+            "dir": "L"
+          }
+        ],
+        "points": [
+          {
+            "id": "B1",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "G2",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "B3",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "work"
+    },
+    {
+      "skin_id": "SK072",
+      "persona": "低频社交者",
+      "match": {
+        "axes": [],
+        "points": [
+          {
+            "id": "E8",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "E6",
+            "op": ">=",
+            "value": 4
+          },
+          {
+            "id": "A6",
+            "op": ">=",
+            "value": 4
+          }
+        ]
+      },
+      "domain": "social"
+    }
+  ]
+}
