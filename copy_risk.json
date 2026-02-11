@@ -1,0 +1,166 @@
+{
+  "package_version": "v5_x1_outputlibs_v1",
+  "generated_at_utc": "2026-02-08T18:50:14Z",
+  "language": "zh-CN",
+  "source_package": "v5_x1_split_v1",
+  "schema": "copy_risk.v1",
+  "desc": "雷区文案库：point_id->短标签（单向触发）；包含触发条件，只有满足条件才进入雷区候选。 约定：雷区为右侧高分触发（R侧），不使用L/M/R方向键。CI校验建议：1) high_only为true时threshold需为4或5；2) point_id必须存在于questions题库；3) risk点位不得与外显/内核同ID重复输出（由risk_rules保证）；4) 雷区三条需跨维度字母且不足时要有补齐/降级策略。",
+  "points": {
+    "F1": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "怕当众出丑",
+        "怕被看笑话",
+        "怕丢面子"
+      ]
+    },
+    "F2": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "怕公开翻车",
+        "怕人前失败",
+        "怕场面难看"
+      ]
+    },
+    "F4": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "怕被否定",
+        "怕被说不行",
+        "怕被打击"
+      ]
+    },
+    "F5": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "怕事情失控",
+        "怕局面变乱",
+        "怕不可控"
+      ]
+    },
+    "B1": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "没人回应",
+        "空气回复",
+        "回音太慢"
+      ]
+    },
+    "B3": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "说不清楚",
+        "需求含糊",
+        "理解不一"
+      ]
+    },
+    "E6": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "人情耗电",
+        "关系绑架",
+        "欠人情"
+      ]
+    },
+    "D4": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "临时插事",
+        "被打断",
+        "计划被撕"
+      ]
+    },
+    "D6": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "随叫随到",
+        "没整块时间",
+        "一直被喊"
+      ]
+    },
+    "G4": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "中途打断",
+        "被催切换",
+        "节奏被拆"
+      ]
+    },
+    "D5": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "反复改稿",
+        "来回返工",
+        "改到心累"
+      ]
+    },
+    "C4": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "方向总变",
+        "今天说改",
+        "反复改主意"
+      ]
+    },
+    "C5": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "风险上头",
+        "大起大落",
+        "心里发慌"
+      ]
+    },
+    "E7": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "当场对线",
+        "硬碰硬",
+        "现场顶嘴"
+      ]
+    },
+    "E8": {
+      "trigger": "high_only",
+      "threshold": 4,
+      "labels": [
+        "冲突压迫",
+        "被逼表态",
+        "气氛很僵"
+      ]
+    }
+  },
+  "priority_tiers": {
+    "S": [
+      "F1",
+      "F2",
+      "F4",
+      "F5",
+      "B1",
+      "E6",
+      "D4",
+      "D6",
+      "G4",
+      "C4"
+    ],
+    "A": [
+      "E7",
+      "E8",
+      "D5",
+      "B3",
+      "C5"
+    ]
+  }
+}

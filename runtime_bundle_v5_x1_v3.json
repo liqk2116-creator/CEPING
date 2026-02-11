@@ -1,0 +1,4156 @@
+{
+  "package_version": "runtime_bundle_v5_x1_v3",
+  "generated_at_utc": "2026-02-11T19:20:36Z",
+  "language": "zh-CN",
+  "schema": "runtime_bundle.v1",
+  "desc": "单文件执行层运行包：从答题到免费层输出的全套确定性规则与映射（可版本化、可CI测试）。包含计分/方向判定/item_map/trait_rules/选点/雷区/命中策略/结果规范。",
+  "scoring": {
+    "score_range": {
+      "min": 1,
+      "max": 5
+    },
+    "reverse_scoring": {
+      "enabled": true,
+      "formula": "if item.reverse: score = 6 - raw_score else score = raw_score"
+    },
+    "salience": {
+      "formula": "abs(score - 3)",
+      "desc": "鲜明度：用于挑最鲜明点位与雷区排序。"
+    },
+    "missing_policy": {
+      "mode": "incomplete_if_any_missing",
+      "desc": "若关键点位缺答，则标记incomplete（可由前端要求必答避免）。"
+    }
+  },
+  "direction_rules": {
+    "axes_LMR": {
+      "direction_enum": [
+        "L",
+        "M",
+        "R"
+      ],
+      "axis_score_method": "mean",
+      "thresholds": {
+        "L_max": 2.4,
+        "M_min": 2.5,
+        "M_max": 3.5,
+        "R_min": 3.6
+      },
+      "desc": "六轴标签用的方向区间（不对用户展示分数）。"
+    },
+    "points_LMR": {
+      "direction_enum": [
+        "L",
+        "M",
+        "R"
+      ],
+      "thresholds": {
+        "L_max": 2,
+        "M_value": 3,
+        "R_min": 4
+      },
+      "desc": "点位方向：<=2为L，==3为M（仅当点位被选中用于文案时输出/使用M备用文案），>=4为R。点位未被选中时无需输出其方向。"
+    }
+  },
+  "item_map": {
+    "schema": "item_map.v1",
+    "desc": "题目→点位/轴映射矩阵。每题可映射多个targets；点位分=weighted_mean(按targets权重)。此文件必须由题库设计者补全targets。 自动从questions_v5_x1_zhCN生成结构题 item->point 映射（每题绑定其group_id点位，weight=1，reverse沿用题库）。",
+    "point_aggregation": "weighted_mean",
+    "items": {
+      "A1.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A1.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A1.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A1.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A1.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A2.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A2.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A2.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A2.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A2.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A3.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A3.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A3.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A3.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A3.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A4.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A4.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A4.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A4.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A4.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A5.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A5.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A5.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A5.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A5.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A6.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A6.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A6.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A6.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A6.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A7.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A7",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A7.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A7",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A7.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A7",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A7.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A7",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A7.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A7",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A8.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A8",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A8.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A8",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A8.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A8",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "A8.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A8",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "A8.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "A8",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B1.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B1.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B1.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B1.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B1.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B2.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B2.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B2.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B2.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B2.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B3.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B3.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B3.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B3.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B3.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B4.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B4.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B4.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B4.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B4.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B5.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B5.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B5.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B5.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B5.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B6.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B6.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B6.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "B6.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "B6.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "B6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C1.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C1.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C1.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C1.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C1.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C2.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C2.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C2.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C2.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C2.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C3.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C3.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C3.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C3.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C3.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C4.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C4.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C4.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C4.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C4.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C5.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C5.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C5.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C5.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C5.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C6.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C6.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C6.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "C6.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "C6.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "C6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D1.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D1.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D1.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D1.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D1.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D2.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D2.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D2.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D2.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D2.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D3.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D3.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D3.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D3.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D3.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D4.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D4.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D4.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D4.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D4.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D5.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D5.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D5.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D5.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D5.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D6.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D6.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D6.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "D6.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "D6.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "D6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E1.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E1.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E1.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E1.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E1.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E2.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E2.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E2.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E2.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E2.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E3.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E3.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E3.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E3.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E3.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E4.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E4.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E4.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E4.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E4.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E5.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E5.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E5.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E5.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E5.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E6.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E6.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E6.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E6.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E6.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E7.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E7",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E7.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E7",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E7.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E7",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E7.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E7",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E7.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E7",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E8.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E8",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E8.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E8",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E8.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E8",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "E8.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E8",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "E8.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "E8",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F1.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F1.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F1.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F1.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F1.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F2.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F2.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F2.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F2.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F2.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F3.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F3.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F3.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F3.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F3.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F4.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F4.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F4.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F4.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F4.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F5.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F5.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F5.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F5.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F5.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F6.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F6.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F6.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "F6.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "F6.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "F6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G1.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G1.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G1.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G1.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G1.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G2.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G2.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G2.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G2.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G2.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G3.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G3.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G3.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G3.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G3.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G4.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G4.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G4.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G4.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G4.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G5.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G5.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G5.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G5.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G5.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G6.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G6.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G6.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "G6.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "G6.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "G6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H1.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H1.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H1.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H1",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H1.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H1.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H1",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H2.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H2.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H2.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H2",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H2.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H2.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H2",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H3.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H3.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H3.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H3",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H3.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H3.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H3",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H4.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H4.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H4.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H4",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H4.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H4.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H4",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H5.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H5.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H5.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H5",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H5.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H5.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H5",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H6.1": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H6.2": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H6.3": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H6",
+            "weight": 1
+          }
+        ],
+        "reverse": false,
+        "source": "questions.axes"
+      },
+      "H6.4": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      },
+      "H6.5": {
+        "targets": [
+          {
+            "type": "point",
+            "id": "H6",
+            "weight": 1
+          }
+        ],
+        "reverse": true,
+        "source": "questions.axes"
+      }
+    }
+  },
+  "trait_rules": {
+    "schema": "trait_rules.v1",
+    "desc": "X/情境题→trait映射与裁决。mapping.by_item_option 使用复合键：forced_choice用 '<Xid>:<option_id>'；SJT用 '<item_id>:BEST:<option_id>' 与 '<item_id>:WORST:<option_id>'。先按trait_aliases归一，再累计trait得分；得分>=threshold_strong视为强指向；冲突按trait_priority从高到低取用。",
+    "threshold_strong": 2,
+    "trait_priority": [
+      "prefer_talk_first",
+      "strategy_clarify_first",
+      "strategy_draft_first",
+      "strategy_do_what_you_can",
+      "prefer_recognition",
+      "prefer_data_gain",
+      "prefer_stable_result",
+      "fear_public_shame",
+      "fear_losing_control"
+    ],
+    "mapping": {
+      "by_item_option": {
+        "X1:A": [
+          {
+            "trait": "prefer_stable_result",
+            "delta": 1
+          }
+        ],
+        "X1:B": [
+          {
+            "trait": "prefer_novelty",
+            "delta": 1
+          }
+        ],
+        "X2:A": [
+          {
+            "trait": "prefer_recognition",
+            "delta": 1
+          }
+        ],
+        "X2:B": [
+          {
+            "trait": "prefer_understanding",
+            "delta": 1
+          }
+        ],
+        "X3:A": [
+          {
+            "trait": "prefer_data_gain",
+            "delta": 1
+          }
+        ],
+        "X3:B": [
+          {
+            "trait": "prefer_visible_output",
+            "delta": 1
+          }
+        ],
+        "X4:A": [
+          {
+            "trait": "prefer_steady_pace",
+            "delta": 1
+          }
+        ],
+        "X4:B": [
+          {
+            "trait": "prefer_sprint",
+            "delta": 1
+          }
+        ],
+        "X5:A": [
+          {
+            "trait": "prefer_ownership",
+            "delta": 1
+          }
+        ],
+        "X5:B": [
+          {
+            "trait": "prefer_collaboration",
+            "delta": 1
+          }
+        ],
+        "X6:A": [
+          {
+            "trait": "prefer_text_first",
+            "delta": 1
+          }
+        ],
+        "X6:B": [
+          {
+            "trait": "prefer_talk_first",
+            "delta": 1
+          }
+        ],
+        "X7:A": [
+          {
+            "trait": "fear_public_shame",
+            "delta": 1
+          }
+        ],
+        "X7:B": [
+          {
+            "trait": "fear_losing_control",
+            "delta": 1
+          }
+        ],
+        "X8:A": [
+          {
+            "trait": "hate_no_response",
+            "delta": 1
+          }
+        ],
+        "X8:B": [
+          {
+            "trait": "hate_coordination",
+            "delta": 1
+          }
+        ],
+        "X9:A": [
+          {
+            "trait": "prefer_small_bet_first",
+            "delta": 1
+          }
+        ],
+        "X9:B": [
+          {
+            "trait": "prefer_big_commitment",
+            "delta": 1
+          }
+        ],
+        "X10:A": [
+          {
+            "trait": "prefer_rules_stable",
+            "delta": 1
+          }
+        ],
+        "X10:B": [
+          {
+            "trait": "prefer_flexible_fast",
+            "delta": 1
+          }
+        ],
+        "SJT-1.1:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-1.1:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-1.1:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-1.1:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-1.1:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-1.1:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-1.1:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-1.1:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-1.2:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-1.2:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-1.2:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-1.2:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-1.2:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-1.2:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-1.2:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-1.2:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-1.3:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-1.3:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-1.3:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-1.3:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-1.3:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-1.3:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-1.3:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-1.3:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-2.1:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-2.1:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-2.1:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-2.1:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-2.1:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-2.1:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-2.1:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-2.1:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-2.2:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-2.2:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-2.2:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-2.2:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-2.2:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-2.2:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-2.2:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-2.2:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-2.3:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-2.3:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-2.3:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-2.3:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-2.3:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-2.3:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-2.3:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-2.3:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-3.1:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-3.1:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-3.1:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-3.1:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-3.1:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-3.1:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-3.1:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-3.1:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-3.2:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-3.2:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-3.2:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-3.2:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-3.2:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-3.2:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-3.2:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-3.2:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-3.3:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-3.3:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-3.3:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-3.3:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-3.3:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-3.3:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-3.3:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-3.3:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-4.1:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-4.1:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-4.1:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-4.1:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-4.1:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-4.1:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-4.1:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-4.1:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-4.2:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-4.2:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-4.2:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-4.2:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-4.2:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-4.2:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-4.2:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-4.2:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ],
+        "SJT-4.3:BEST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": 1
+          }
+        ],
+        "SJT-4.3:WORST:A": [
+          {
+            "trait": "strategy_clarify_first",
+            "delta": -1
+          }
+        ],
+        "SJT-4.3:BEST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": 1
+          }
+        ],
+        "SJT-4.3:WORST:B": [
+          {
+            "trait": "strategy_draft_first",
+            "delta": -1
+          }
+        ],
+        "SJT-4.3:BEST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": 1
+          }
+        ],
+        "SJT-4.3:WORST:C": [
+          {
+            "trait": "strategy_wait_for_info",
+            "delta": -1
+          }
+        ],
+        "SJT-4.3:BEST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": 1
+          }
+        ],
+        "SJT-4.3:WORST:D": [
+          {
+            "trait": "strategy_do_what_you_can",
+            "delta": -1
+          }
+        ]
+      }
+    },
+    "conflict_policy": {
+      "mode": "priority_first",
+      "desc": "当多个trait同时满足强指向，按trait_priority取用；若同优先级并列，按字典序。"
+    },
+    "trait_aliases": {
+      "prefer_profit_or_gain": "prefer_data_gain",
+      "stress_sensitive_public": "fear_public_shame",
+      "control_sensitive": "fear_losing_control"
+    }
+  },
+  "selection": {
+    "core": {
+      "desc": "内核= A/F/H 各取1个最鲜明点位。",
+      "pick": {
+        "method": "max_salience",
+        "tie_break_order": "priority_then_tie_break_trait"
+      },
+      "axes": {
+        "A": {
+          "candidates": [
+            "A2",
+            "A5",
+            "A7",
+            "A1",
+            "A6"
+          ],
+          "priority": [
+            "A2",
+            "A5",
+            "A7",
+            "A1",
+            "A6"
+          ]
+        },
+        "F": {
+          "candidates": [
+            "F1",
+            "F5",
+            "F4",
+            "F2"
+          ],
+          "priority": [
+            "F1",
+            "F5",
+            "F4",
+            "F2"
+          ]
+        },
+        "H": {
+          "candidates": [
+            "H5",
+            "H6",
+            "H4",
+            "H2",
+            "H1",
+            "H3"
+          ],
+          "priority": [
+            "H5",
+            "H6",
+            "H4",
+            "H2",
+            "H1",
+            "H3"
+          ]
+        }
+      }
+    },
+    "external": {
+      "desc": "外显=3条：E社交必取1 + GD必取1 + B外显必取1。",
+      "slots": [
+        {
+          "slot_id": "E_social",
+          "candidates": [
+            "E2",
+            "E6",
+            "E7",
+            "E8"
+          ],
+          "priority": [
+            "E2",
+            "E6",
+            "E7",
+            "E8"
+          ]
+        },
+        {
+          "slot_id": "GD_one",
+          "method": "compare_salience_across_pools",
+          "pools": {
+            "G": {
+              "candidates": [
+                "G6",
+                "G1",
+                "G3",
+                "G4",
+                "G5",
+                "G2"
+              ],
+              "priority": [
+                "G6",
+                "G1",
+                "G3",
+                "G4",
+                "G5",
+                "G2"
+              ]
+            },
+            "D": {
+              "candidates": [
+                "D1",
+                "D2",
+                "D4",
+                "D6",
+                "D3",
+                "D5"
+              ],
+              "priority": [
+                "D1",
+                "D2",
+                "D4",
+                "D6",
+                "D3",
+                "D5"
+              ]
+            }
+          },
+          "tie_policy": {
+            "default_point": "G6",
+            "override_if_trait": {
+              "traits_any": [
+                "prefer_talk_first",
+                "strategy_clarify_first"
+              ],
+              "choose_point": "D3",
+              "desc": "若X/SJT强指向“先问清楚/先对齐信息”（prefer_talk_first 或 strategy_clarify_first），优先选D3；否则平级默认G6，再回退priority。"
+            }
+          }
+        },
+        {
+          "slot_id": "B_external",
+          "candidates": [
+            "B1",
+            "B3"
+          ],
+          "priority": [
+            "B1",
+            "B3"
+          ],
+          "neutral_policy": {
+            "when": "both_scores_equal_to_3",
+            "use_fallback_direction": "M"
+          }
+        }
+      ]
+    },
+    "tie_break": {
+      "enabled": true,
+      "only_when": "salience_tie",
+      "desc": "平局裁决：仅在候选点鲜明度完全并列时生效；使用X/情境题trait偏向某些点位。trait 先归一（trait_aliases），再按trait_priority选强指向。",
+      "trait_to_prefer_points": [
+        {
+          "trait": "prefer_stable_result",
+          "prefer": [
+            "A1",
+            "C1",
+            "C6"
+          ]
+        },
+        {
+          "trait": "prefer_data_gain",
+          "prefer": [
+            "A5",
+            "C5"
+          ]
+        },
+        {
+          "trait": "prefer_recognition",
+          "prefer": [
+            "A2"
+          ]
+        },
+        {
+          "trait": "prefer_talk_first",
+          "prefer": [
+            "B3",
+            "D3",
+            "E4"
+          ]
+        },
+        {
+          "trait": "strategy_clarify_first",
+          "prefer": [
+            "B3",
+            "D3",
+            "E4"
+          ]
+        },
+        {
+          "trait": "strategy_draft_first",
+          "prefer": [
+            "G6"
+          ]
+        },
+        {
+          "trait": "strategy_do_what_you_can",
+          "prefer": [
+            "G6",
+            "G5"
+          ]
+        },
+        {
+          "trait": "fear_public_shame",
+          "prefer": [
+            "F1",
+            "F2"
+          ]
+        },
+        {
+          "trait": "fear_losing_control",
+          "prefer": [
+            "F5"
+          ]
+        }
+      ]
+    }
+  },
+  "risk_rules": {
+    "schema": "risk_rules.v1",
+    "desc": "雷区逻辑规则：逐点触发+选取展示。多数high_only>=4，少数low_only<=2。若触发不足3条，放宽到>=3并标记fallback。",
+    "count": 3,
+    "dedupe_against": [
+      "core",
+      "external"
+    ],
+    "prefer_diverse_axis_letter": true,
+    "allow_same_axis_letter_if_insufficient": true,
+    "fallback": {
+      "enabled": true,
+      "relax_high_only_to": 3,
+      "mark_is_fallback": true
+    },
+    "points": {
+      "F1": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "怕当众出丑",
+          "怕被看笑话",
+          "怕丢面子"
+        ]
+      },
+      "F2": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "怕公开翻车",
+          "怕人前失败",
+          "怕场面难看"
+        ]
+      },
+      "F4": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "怕被否定",
+          "怕被说不行",
+          "怕被打击"
+        ]
+      },
+      "F5": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "怕事情失控",
+          "怕局面变乱",
+          "怕不可控"
+        ]
+      },
+      "B1": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "没人回应",
+          "空气回复",
+          "回音太慢"
+        ]
+      },
+      "B3": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "说不清楚",
+          "需求含糊",
+          "理解不一"
+        ]
+      },
+      "E6": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "人情耗电",
+          "关系绑架",
+          "欠人情"
+        ]
+      },
+      "D4": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "临时插事",
+          "被打断",
+          "计划被撕"
+        ]
+      },
+      "D6": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "随叫随到",
+          "没整块时间",
+          "一直被喊"
+        ]
+      },
+      "G4": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "中途打断",
+          "被催切换",
+          "节奏被拆"
+        ]
+      },
+      "D5": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "反复改稿",
+          "来回返工",
+          "改到心累"
+        ]
+      },
+      "C4": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "方向总变",
+          "今天说改",
+          "反复改主意"
+        ]
+      },
+      "C5": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "风险上头",
+          "大起大落",
+          "心里发慌"
+        ]
+      },
+      "E7": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "当场对线",
+          "硬碰硬",
+          "现场顶嘴"
+        ]
+      },
+      "E8": {
+        "trigger": "high_only",
+        "threshold": 4,
+        "labels": [
+          "冲突压迫",
+          "被逼表态",
+          "气氛很僵"
+        ]
+      }
+    }
+  },
+  "match_policy": {
+    "schema": "match_policy.v1",
+    "desc": "combo_rules/skins命中与选取策略，保证同一答案输出稳定可测。",
+    "combo": {
+      "top_k": 1,
+      "sort_keys": [
+        "signal_count_desc",
+        "priority_desc",
+        "rule_id_asc"
+      ],
+      "dedupe": "by_rule_id",
+      "fallback": "none"
+    },
+    "skins": {
+      "top_k": 3,
+      "sort_keys": [
+        "signal_count_desc",
+        "point_conditions_count_desc",
+        "skin_id_asc"
+      ],
+      "dedupe": "by_persona_then_skin_id",
+      "fallback": {
+        "mode": "derive_from_primary_external_or_core",
+        "desc": "若0命中：用外显/内核最鲜明点位映射到一个默认皮肤池（需你后续补一张fallback映射表）。"
+      }
+    }
+  },
+  "result_schema": {
+    "schema": "result_schema.v1",
+    "desc": "最终输出对象规范（供实现/CI对齐）。debug=true时可返回内部数值；debug=false仅返回用户可见字段。",
+    "fields": {
+      "external": {
+        "slots_order": [
+          "E_social",
+          "GD_one",
+          "B_external"
+        ],
+        "count": 3
+      },
+      "core": {
+        "order": [
+          "A",
+          "F",
+          "H"
+        ],
+        "count": 3
+      },
+      "axes": {
+        "order": [
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ],
+        "count": 6
+      },
+      "risk": {
+        "max_count": 3
+      },
+      "combo": {
+        "max_count": 1
+      },
+      "skins": {
+        "count": 3
+      }
+    },
+    "include_internal_when_debug": [
+      "raw_scores_by_item",
+      "scores_by_point",
+      "salience_by_point",
+      "axis_scores",
+      "coverage_by_point",
+      "tie_break_trace",
+      "risk_fallback_used"
+    ]
+  },
+  "libraries_ref": {
+    "copy_external": "copy_external.json",
+    "copy_core": "copy_core.json",
+    "copy_risk": "copy_risk.json",
+    "copy_axes_bg": "copy_axes_bg.json",
+    "combo_rules": "combo_rules.json",
+    "skins": "skins_v2_persona_100.json"
+  },
+  "notes": [
+    "item_map.targets 目前为空壳，必须补齐后才能从答案计算点位/轴分。",
+    "trait_rules.mapping.by_item_option 目前为空壳，若你要tie-break/override生效需补齐。",
+    "risk_rules.points 来自 copy_risk 中的逐点触发字段；如你希望触发逻辑与文案彻底分离，可把 points 复制到独立 risk_rules 文件并在此引用。",
+    "CI建议：校验方向枚举仅L/M/R；展示层copy库不存在N键；libraries_ref指向的文件均存在。",
+    "CI建议：item_map.items覆盖所有结构题item_id；每个item绑定的point_id存在于题库groups。",
+    "CI建议：trait_rules.mapping.by_item_option覆盖所有X与SJT item；trait_aliases归一后trait_id必须存在于trait_priority或被忽略。",
+    "CI建议：GD平级覆盖的choose_point必须存在于D池候选且题库存在该点位。"
+  ],
+  "axes_rules": {
+    "schema": "axes_rules.v1",
+    "desc": "六轴(B–G)入库点位集合与axis_score计算。axis_score=mean(入库点位score)。方向阈值见direction_rules.axes_LMR.",
+    "axes_points_map": {
+      "B": [
+        "B1",
+        "B2",
+        "B4"
+      ],
+      "C": [
+        "C1",
+        "C2",
+        "C5",
+        "C6"
+      ],
+      "D": [
+        "D1",
+        "D2"
+      ],
+      "E": [
+        "E1"
+      ],
+      "F": [
+        "F1",
+        "F2",
+        "F4",
+        "F5"
+      ],
+      "G": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6"
+      ]
+    },
+    "aggregation": "mean",
+    "missing_policy": {
+      "mode": "skip_missing_points",
+      "min_coverage_ratio": 0.6,
+      "desc": "若某轴入库点位缺失，按已答点位均值；覆盖率低于阈值则该轴标记incomplete或回退M（由实现决定）。"
+    }
+  }
+}
